@@ -1,3 +1,4 @@
+// INI DI EDIT DARI EVAL PEMDI YANDEX@branch edit_dari_yandex
 import React from 'react';
 import { FileCheck, Sparkles, ChevronRight, CheckCircle2, AlertCircle, FileSearch, FolderDown, Download } from 'lucide-react';
 import { MATURITY_LEVELS } from '../../data/domainsData';

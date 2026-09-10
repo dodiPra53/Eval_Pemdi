@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  Upload, FileText, CheckCircle2, AlertCircle, Trash2, 
-  ExternalLink, Loader2, Eye, ShieldCheck, FileCheck, Cloud, Database
+  Upload, FileText, CheckCircle2, AlertCircle, 
+  Loader2, Eye, FileCheck, Cloud, Database
 } from 'lucide-react';
-import { getEvidenceList, uploadEvidencePdf, deleteEvidence } from '../../services/evidenceService';
+import { getEvidenceList, uploadEvidencePdf } from '../../services/evidenceService';
 import { isSupabaseConfigured } from '../../services/supabaseClient';
 
 export default function EvidenceUploadManager({
@@ -150,20 +150,6 @@ export default function EvidenceUploadManager({
     }
   };
 
-  const handleDelete = async (id, title, storagePath) => {
-    if (!window.confirm(`Hapus dokumen bukti "${title}" dari database?`)) {
-      return;
-    }
-
-    setErrorMsg('');
-    try {
-      await deleteEvidence(id, storagePath);
-      setSuccessMsg(`Dokumen bukti "${title}" berhasil dihapus.`);
-      await loadEvidence();
-    } catch (err) {
-      setErrorMsg(err.message || 'Gagal menghapus bukti.');
-    }
-  };
 
   const formatFileSize = (bytes) => {
     if (!bytes) return '0 B';
@@ -457,20 +443,12 @@ export default function EvidenceUploadManager({
                       target="_blank"
                       rel="noreferrer"
                       title="Buka / Unduh Berkas PDF"
-                      className="p-1.5 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 transition-colors"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>Lihat PDF</span>
                     </a>
                   )}
-
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(doc.id, doc.judul_dokumen, doc.file_path_storage)}
-                    title="Hapus Dokumen"
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
                 </div>
               </div>
             ))}
